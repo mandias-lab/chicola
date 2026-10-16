@@ -1,0 +1,101 @@
+{
+  "name": "chicola",
+  "displayName": "Chicola — OpenSpec ShellGrid",
+  "description": "Extensão no estilo ShellGrid para VS Code e Antigravity: orquestre e visualize especificações e tarefas do OpenSpec e DevFlow em tempo real.",
+  "version": "0.1.0",
+  "publisher": "mandias-lab",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mandias-lab/chicola.git"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "openspec",
+    "devflow",
+    "antigravity",
+    "spec-driven",
+    "shellgrid",
+    "matrix",
+    "dashboard"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "workspaceContains:openspec/config.yaml",
+    "workspaceContains:openspec/project.md"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "chicola-sidebar",
+          "title": "Chicola",
+          "icon": "resources/chicola-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "chicola-sidebar": [
+        {
+          "type": "webview",
+          "id": "chicola.shellgrid",
+          "name": "ShellGrid Matrix"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "chicola.openGrid",
+        "title": "Chicola: Focar ShellGrid",
+        "category": "Chicola"
+      },
+      {
+        "command": "chicola.refresh",
+        "title": "Chicola: Atualizar Estado",
+        "category": "Chicola",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "chicola.applyNextTask",
+        "title": "Chicola: Aplicar Próxima Tarefa",
+        "category": "Chicola",
+        "icon": "$(play)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "chicola.refresh",
+          "when": "view == chicola.shellgrid",
+          "group": "navigation@1"
+        },
+        {
+          "command": "chicola.applyNextTask",
+          "when": "view == chicola.shellgrid",
+          "group": "navigation@2"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --minify",
+    "dev": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --sourcemap --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/vscode": "^1.90.0",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8"
+  }
+}
