@@ -421,9 +421,9 @@ export class ShellGridViewProvider implements vscode.WebviewViewProvider {
 
       // Progress
       const percent = change.progressPercent || 0;
-      document.getElementById('progressText').textContent = `${percent}%`;
-      document.getElementById('progressFill').style.width = `${percent}%`;
-      document.getElementById('tasksCounter').textContent = `${change.completedTasks}/${change.totalTasks}`;
+      document.getElementById('progressText').textContent = percent + '%';
+      document.getElementById('progressFill').style.width = percent + '%';
+      document.getElementById('tasksCounter').textContent = change.completedTasks + '/' + change.totalTasks;
 
       // Tasks
       const tasksContainer = document.getElementById('tasksList');
@@ -437,7 +437,7 @@ export class ShellGridViewProvider implements vscode.WebviewViewProvider {
           card.className = 'task-card';
 
           const icon = document.createElement('div');
-          icon.className = `task-status-indicator task-status-${task.status}`;
+          icon.className = 'task-status-indicator task-status-' + task.status;
           icon.textContent = task.status === 'completed' ? '✓' : (task.status === 'in_progress' ? '●' : '');
 
           const info = document.createElement('div');
@@ -449,7 +449,7 @@ export class ShellGridViewProvider implements vscode.WebviewViewProvider {
 
           const meta = document.createElement('div');
           meta.className = 'task-meta';
-          meta.textContent = `#${task.index} ${task.capability ? '• ' + task.capability : ''}`;
+          meta.textContent = '#' + task.index + (task.capability ? ' • ' + task.capability : '');
 
           info.appendChild(title);
           info.appendChild(meta);
@@ -486,7 +486,7 @@ export class ShellGridViewProvider implements vscode.WebviewViewProvider {
           const scenariosCount = spec.requirements.reduce((acc, req) => acc + (req.scenarios ? req.scenarios.length : 0), 0);
           const meta = document.createElement('div');
           meta.className = 'spec-scenarios';
-          meta.textContent = `${spec.requirements.length} requisitos • ${scenariosCount} cenários WHEN/THEN`;
+          meta.textContent = spec.requirements.length + ' requisitos • ' + scenariosCount + ' cenários WHEN/THEN';
 
           item.appendChild(cap);
           item.appendChild(meta);
